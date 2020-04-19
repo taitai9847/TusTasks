@@ -1,0 +1,6 @@
+framework module Pods_TusTasks {
+  umbrella header "Pods-TusTasks-umbrella.h"
+
+  export *
+  module * { export * }
+}
