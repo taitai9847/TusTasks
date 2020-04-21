@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         taskList.delegate = self
         
         //カスタムセルを使う宣言
-        taskList.register(UINib(nibName: "TasksCell", bundle: nil),forCellReuseIdentifier:"cell")
+        taskList.register(R.nib.tasksCell)
         
         //realからtaskItemsを呼び出す
         let realm = try! Realm()
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addTaskButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "toAddTaskVC", sender: nil)
+        self.performSegue(withIdentifier: R.segue.viewController.toAddTaskVC, sender: nil)
     }
 }
 
@@ -58,8 +58,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        let object = taskItems?[(taskItems.count - indexPath.row) - 1].content
+        guard let cell: TasksCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.taskCell, for: indexPath) else { return UITableViewCell() }
         let object = taskItems?[indexPath.row].content
         cell.textLabel?.text = object
         return cell
@@ -67,8 +66,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     //セルが選択された時の挙動
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
-//        let tasks = taskItems[(taskItems.count - indexPath.row) - 1].content
         let tasks = taskItems[indexPath.row].content
         self.contentValue = tasks
         performSegue(withIdentifier: "toSavedTaskVC", sender: nil)
@@ -88,8 +85,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let removeAction = UIContextualAction(style: .normal,
                                               title: "削除",
                                               handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
-                                                //
-//                                                self.deleteTasks(at: (self.taskItems.count - indexPath.row) - 1)
                                                 self.deleteTasks(at: indexPath.row)
                                                 self.taskList.reloadData()
         })
@@ -100,7 +95,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func deleteTasks(at index: Int) {
         let realm = try! Realm()
         try! realm.write {
-//            realm.delete(taskItems[taskItems.count - index - 1])
             realm.delete(taskItems[index])
         }
     }

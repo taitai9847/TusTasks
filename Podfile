@@ -8,5 +8,6 @@ target 'TusTasks' do
   # Pods for TusTasks
 
   pod 'RealmSwift'
+  pod 'R.swift'
 
 end
