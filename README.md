@@ -17,5 +17,5 @@ $cd Tustasks
 //正しい階層にいるのかどうか確認してください
 $pwd
 ```
-##2. Xcodeで開く
+## 2. Xcodeで開く
 `TusTasks.xcworkspace`を開いてください。
